@@ -1,0 +1,321 @@
+/**
+ * 🇨🇭 i18n/locales/ch.js — Schweizerdeutsch (de-CH)
+ *
+ * Standarddeutsche Schriftsprache mit schweizerischer Ausprägung:
+ * konsequente Höflichkeitsform «Sie», schweizerische Wortwahl und
+ * schweizerische Zahlen-/Datumsformate (in der UI berücksichtigt).
+ */
+export default {
+  game: {
+    title: 'Weg vo de Baumeister',
+  },
+
+  ui: {
+    start: {
+      subtitle: 'Amerika und Kanada bauen – vom Fundament bis zum Dach',
+      choose: 'Wähle deine Figur',
+      male: 'Bauleiter',
+      female: 'Bauleiterin',
+      maleName: 'Carlos',
+      femaleName: 'Maria',
+      begin: 'Reise starten →',
+      controls: 'Steuerung',
+      ctrlMove: 'gehen',
+      ctrlJump: 'springen',
+      ctrlInspect: 'nahe Anlage inspizieren',
+      ctrlRun: 'rennen',
+      ctrlClose: 'schliessen',
+      ctrlCamera: 'ziehen zum Drehen · Mausrad – Zoom',
+      hint: 'Geh zu den Anlagen, um zu entdecken, wie Zement hergestellt wird 🟠',
+namePlaceholder: 'Gib deinen Namen ein…',
+    nameHint: 'So werden Sie in jeder Anlage begrüsst 🏗️',
+    },
+    hud: {
+      passport: 'Baupass',
+      backToMap: 'Zurück zur Karte',
+      objective: 'Ziel',
+      selectDest: 'Wähle dein Reiseziel',
+      approach: 'Geh zu einer Maschine und drücke E',
+      northAmerica: 'Nordamerika',
+    },
+    card: {
+      address: 'Adresse',
+      region: 'Region',
+      activity: 'Tätigkeit',
+      brand: 'Marke',
+      coords: 'Koordinaten',
+      visit: 'Zur Anlage reisen',
+      understood: 'Verstanden! ✓',
+      fact: 'Wichtiger Fakt',
+      close: 'Schliessen',
+    },
+    prompt: {
+      inspect: 'Inspektieren',
+    },
+    toast: {
+      stamp: 'Stempel erhalten',
+      inspected: ' inspiziert',
+      travelling: 'Unterwegs nach',
+    },
+    rank: {
+      new: 'Neues Teammitglied',
+      apprentice: 'Lehrling',
+      builder: 'Bauleiter',
+      expert: 'Experte',
+      ambassador: 'Amrize-Botschafter',
+    },
+    search: {
+      placeholder: '🔍 Anlage oder Stadt suchen…',
+      all: 'Alle',
+      noResults: 'Keine Resultate',
+      results: 'Resultate',
+      filterBy: 'Nach Typ filtern',
+    },
+  },
+
+  biz: {
+    aggregates: {
+      icon: '🪨',
+      name: 'Gesteinskörnungen',
+      tagline: 'Die Basis von allem',
+      description: 'Gebrochener Stein und Sand – die Grundlage von Beton, Asphalt und Strassen.',
+    },
+    cement: {
+      icon: '🟠',
+      name: 'Zement',
+      tagline: 'Der Leim des Bauens',
+      description: 'Der «Leim» des Betons, hergestellt durch Brennen von Kalkstein und Ton bei extrem hohen Temperaturen.',
+    },
+    concrete: {
+      icon: '🔵',
+      name: 'Beton',
+      tagline: 'Bereit zum Bauen',
+      description: 'Zement + Wasser + Gesteinskörnung + Zusatzmittel – präzise gemischt und frisch auf die Baustelle geliefert.',
+    },
+    asphalt: {
+      icon: '⚫',
+      name: 'Asphalt',
+      tagline: 'Strassen und Autobahnen',
+      description: 'Gesteinskörnung mit Bindemittel gemischt, um Strassen und Autobahnen zu asphaltieren.',
+    },
+    roofing: {
+      icon: '🟤',
+      name: 'Dach & Gebäudehülle',
+      tagline: 'Vom Fundament bis zum Dach',
+      description: 'Membranen, Schindeln, Dämmung, Klebstoffe und Dichtstoffe: alles, was das Gebäude schützt.',
+    },
+    logistics: {
+      icon: '🚂',
+      name: 'Distribution & Logistik',
+      tagline: 'Über 1.000 vernetzte Standorte',
+      description: 'Lastwagen, Züge und Häfen bringen das Produkt auf jede Baustelle in Nordamerika.',
+    },
+  },
+
+  stations: {
+    cantera: {
+      icon: '🪨',
+      title: 'Kalksteinbruch',
+      text: 'Alles beginnt hier: Kalkstein und Ton werden abgebaut – die Rohstoffe des Zements. Kontrollierte Geräte und Rekultivierungspläne schonen die Umwelt.',
+      fact: 'Zement entsteht durch Brennen von Kalkstein und Ton bei extrem hohen Temperaturen.',
+    },
+    trituracion: {
+      icon: '⚙️',
+      title: 'Brechen und Mahlen des Rohmaterials',
+      text: 'Der Stein wird gebrochen und zu einem feinen Gemisch gemahlen, dem «Rohmehl». Vor dem Ofen wird das Material homogenisiert, damit die Rezeptur stimmt.',
+      fact: 'Die genaue Mineralrezeptur bestimmt die Qualität des Zements.',
+    },
+    prehorno: {
+      icon: '🗼',
+      title: 'Vorwärmer (Zyklone)',
+      text: 'Das Rohmehl steigt in Zyklontürmen auf, wo heisse Ofengase es vorwärmen. Diese Wärme nutzen = weniger Energie und weniger CO₂!',
+      fact: 'Moderne Vorwärmer gewinnen Ofenwärme zurück und sparen so Energie.',
+    },
+    horno: {
+      icon: '🔥',
+      title: 'Drehrohren',
+      text: 'Das Herz der Anlage: ein riesiger Drehrohren, in dem die Mischung rund 1.450 °C erreicht. Es entstehen glühende Kügelchen namens KLINKER.',
+      fact: 'Ein Drehrohren kann über 100 Meter lang sein und dreht sich ununterbrochen.',
+    },
+    molino: {
+      icon: '🌀',
+      title: 'Zementmahlen',
+      text: 'Der Klinker wird mit Gips gemahlen (Gips reguliert das Erstarren). Ergebnis: der Zementstaub aus Säcken und Silos.',
+      fact: 'Ein Standard-Zementsack wiegt 42.5 kg – und ergibt sehr viel Beton!',
+    },
+    silos: {
+      icon: '🏢',
+      title: 'Silos und Versand',
+      text: 'Zement wird in riesigen Silos gelagert und per Tankwagen im Grossraum ausgeliefert – oder abgefüllt. Von hier geht es zu Betonwerken und Baustellen.',
+      fact: 'Amrize ist in 100 % der US-Bundesstaaten und kanadischen Provinzen vertreten.',
+    },
+    calidad: {
+      icon: '🧪',
+      title: 'Qualitätslabor',
+      text: 'Täglich werden Proben entnommen und geprüft: Feinheit, Festigkeit, Erstarren. Das Labor garantiert, dass jede Tonne die Normen erfüllt.',
+      fact: 'Zementproben werden nach 1, 7 und 28 Tagen auf ihre Festigkeit geprüft.',
+    },
+    sostenibilidad: {
+      icon: '🌱',
+      title: 'Nachhaltigkeit bei Amrize',
+      text: 'Die Anlage arbeitet mit alternativen Brennstoffen, rezyklelten Materialien und Energieeffizienz, um den CO₂-Fussabdruck pro Tonne Zement zu senken.',
+      fact: 'Kreislaufwirtschaft: Abfälle anderer Prozesse werden Brennstoff oder Rohstoff.',
+    },
+    camion: {
+      icon: '🚚',
+      title: 'Betonmischlaster (Ready-Mix)',
+      text: 'Er transportiert frischen Beton vom Werk zur Baustelle. Die Trommel dreht sich ununterbrochen, damit der Beton unterwegs nicht erstarrt.',
+      fact: 'Frischen Beton zu liefern ist ein Wettlauf gegen die Uhr: Im Laster beginnt das Erstarren.',
+    },
+    'ag-extraccion': {
+      icon: '🚜',
+      title: 'Abbau und Sprengung',
+      text: 'Im Steinbruch wird Material mit Bagger und kontrollierten Sprengungen gewonnen. Jede Schicht wird Abraum abgetragen und die Vegetation wiederhergestellt.',
+      fact: 'Moderne Steinbrüche planen die Rekultivierung, damit die Natur zurückkehrt.',
+    },
+    'ag-trituracion': {
+      icon: '⚙️',
+      title: 'Brechen',
+      text: 'Vor- und Nachbrecher zerkleinern den Stein. Der Vorbrecher reduziert die Blockgrösse, der Nachbrecher verfeinert die Korngrösse.',
+      fact: 'Jede Brechstufe vervielfacht die Oberfläche des Gesteins und erleichtert den Transport.',
+    },
+    'ag-zarandeo': {
+      icon: '🔲',
+      title: 'Sieben und Klassieren',
+      text: 'Vibrationssiebe trennen das Gemisch nach Grösse: 3/4", 1/2", 1/4" und Sand. So erhält jede Baustelle genau die passende Korngrösse.',
+      fact: 'Eine gute Sieblung macht Beton stärker und dauerhafter.',
+    },
+    'ag-lavado': {
+      icon: '💧',
+      title: 'Waschen und Klassieren des Sandes',
+      text: 'Wasser trägt Staub, Ton und organische Stoffe aus dem Sand. Das Waschwasser wird im Kreislauf geführt, damit diese Ressource nicht vergeudet wird.',
+      fact: 'Gewaschener Sand ist für Hochfestigkeitsbeton und Fahrbahnen unerlässlich.',
+    },
+    'ag-almacen': {
+      icon: '🚛',
+      title: 'Lagerung und Versand',
+      text: 'Die Gesteinskörnungen werden nach Grösse im Lager gestapelt und per Lastwagen oder Bahnwagen zu Baustellen und Betonwerken transportiert.',
+      fact: 'Amrize betreibt ein Netz aus Steinbrüchen und Lagerplätzen mit Just-in-time-Lieferung.',
+    },
+    'co-dosificacion': {
+      icon: '🧮',
+      title: 'Dosierung (die Rezeptur)',
+      text: 'Der Werksrechner wiegt jedes Material ab: Zement, Wasser, Sand und Kies. Die Rezeptur richtet sich nach der geforderten Festigkeit und Verwendung.',
+      fact: 'Eine Mischungsentwicklung zielt auf den stärksten Beton zu geringsten Kosten.',
+    },
+    'co-mezclado': {
+      icon: '🌀',
+      title: 'Mischen',
+      text: 'Der zentrale Mischer kombiniert die Materialien bis zur homogenen Mischung. Zeit und Drehzahl sind exakt – keine Sekunde zu viel.',
+      fact: 'Der Beton muss frisch geliefert werden: einmal eingebaut, lässt sich nichts mehr ändern.',
+    },
+    'co-transporte': {
+      icon: '🚚',
+      title: 'Transport zur Baustelle',
+      text: 'Der Betonmischlaster bringt den frischen Beton. Die Trommel dreht sich unterwegs, um das Erstarren zu verzögern und die Qualität zu sichern.',
+      fact: 'Beton gilt nur etwa 90 Minuten nach der Herstellung als frisch.',
+    },
+    'co-colocacion': {
+      icon: '🏗️',
+      title: 'Einbau und Verdichtung',
+      text: 'Der Beton wird in die Schalung eingebracht, vibriert um Luftblasen zu entfernen und anschliessend mit Wasser nachbehandelt.',
+      fact: 'Gutes Vibrieren kann die Betonfestigkeit um 20 % erhöhen.',
+    },
+    'co-calidad': {
+      icon: '🧪',
+      title: 'Qualitätskontrolle',
+      text: 'Der slump wird gemessen, Prüfkörper werden hergestellt und nach 7 und 28 Tagen geprüft, um die geplante Festigkeit zu bestätigen.',
+      fact: 'Nach 28 Tagen wird die endgültige Betonfestigkeit bewertet.',
+    },
+    'as-secado': {
+      icon: '🔥',
+      title: 'Trocknen und Erhitzen der Gesteinskörnung',
+      text: 'Die Gesteinskörnung wird auf etwa 150-180 °C getrocknet und erhitzt, damit sie gut mit dem Bindemittel haftet.',
+      fact: 'Trockene, heisse Gesteinskörnung ist der Schlüssel zu einem dauerhaften Asphalt.',
+    },
+    'as-mezcla': {
+      icon: '🌀',
+      title: 'Heissmischen',
+      text: 'Im Mischwerk wird heisse Gesteinskörnung mit dem Bindemittel kombiniert. Alles wird über 140 °C hergestellt.',
+      fact: 'Asphalt ist viskoelastisch: heiss fliesst er, beim Abkühlen wird er steif.',
+    },
+    'as-transporte': {
+      icon: '🚛',
+      title: 'Transport',
+      text: 'Tanker bringen die heisse Mischung zur Baustelle. Man muss ankommen, bevor sie zu stark abkühlt.',
+      fact: 'Die Asphaltmischung muss verdichtet sein, bevor ihre Temperatur unter 80 °C fällt.',
+    },
+    'as-extendido': {
+      icon: '🛣️',
+      title: 'Einbau',
+      text: 'Der Fertiger legt die Mischung in gleichmässigen Lagen auf die vorbereitete Fläche und kontrolliert dabei die Dicke.',
+      fact: 'Guter Einbau verhindert Segregation – das Aufreissen der Mischung beim Walzen.',
+    },
+    'as-compactado': {
+      icon: '🚜',
+      title: 'Verdichtung',
+      text: 'Vibrations- und pneumatische Walzen verdichten die Lage bis zur geforderten Dichte. Ein gut verdichteter Belag hält Jahrzehnte.',
+      fact: 'Die Verdichtung ist 80 % der Arbeit: der Schlüssel zu dauerhaftem Asphalt.',
+    },
+    'as-rap': {
+      icon: '♻️',
+      title: 'RAP – Recycling-Asphalt',
+      text: 'Alter Asphalt wird gefräst und in die Anlage zurückgebracht. Eines der grössten Beispiele für Kreislaufwirtschaft im Bauen.',
+      fact: 'Bis zu 30 % RAP können wiederverwendet werden: weniger neue Rohstoffe, weniger Abfall.',
+    },
+    'ro-fabricacion': {
+      icon: '🏭',
+      title: 'Membranherstellung',
+      text: 'EPDM-, TPO- und PVC-Bahnen werden auf kontinuierlichen Rollen produziert, geprüft und für den Versand aufgerollt.',
+      fact: 'Reflektierende Membranen können die Dachtemperatur um bis zu 20 °C senken.',
+    },
+    'ro-accesorios': {
+      icon: '🧰',
+      title: 'Zubehör und Dämmung',
+      text: 'Klebstoffe, Dichtstoffe, Bänder, Anschlussbleche und Dämmplatten gehören zur Bahn – ohne sie funktioniert das System nicht.',
+      fact: 'Ein gut gebautes Dach enthält mehr als 20 verschiedene Zubehörteile.',
+    },
+    'ro-instalacion': {
+      icon: '👷',
+      title: 'Dachinstallation',
+      text: 'Die Fläche wird gereinigt, die Dämmung verlegt und die Bahn an den Nähten thermisch verschweisst und am Rand befestigt.',
+      fact: 'Nur die korrekte Abdichtung jeder Naht garantiert die Dichtheit.',
+    },
+    'ro-impermeabilidad': {
+      icon: '🌧️',
+      title: 'Abdichtung und Garantie',
+      text: 'Es werden Wasserproben durchgeführt und die Installation dokumentiert. Amrize-Membranen können Jahrzehnte halten.',
+      fact: 'Eine gut abgedichtete Hülle kann den Heizenergiebedarf um bis zu 20 % senken.',
+    },
+    'lo-pedido': {
+      icon: '📋',
+      title: 'Bestellung und Koordination',
+      text: 'Die Baustelle bestellt ihr Produkt rechtzeitig. Das System koordiniert Mengen, Zeiten und Lastwagen für jede Lieferung.',
+      fact: 'Ein Netz von über 1.000 Standorten ermöglicht Lieferungen in ganz Nordamerika.',
+    },
+    'lo-planificacion': {
+      icon: '🗺️',
+      title: 'Routenplanung',
+      text: 'Je nach Entfernung und Dringlichkeit wählt man Lastwagen, Zug oder Schiff und optimiert dabei Kraftstoff und Zeit.',
+      fact: 'Die optimale Route kann CO₂-Emissionen um bis zu 15 % senken.',
+    },
+    'lo-despacho': {
+      icon: '🚛',
+      title: 'Versand',
+      text: 'Terminals und Lagerplätze beladen Lastwagen und Bahnwagen nach einem straffen Plan, damit kein Kunde wartet.',
+      fact: 'Frischer Beton und Asphalt können nicht warten: Versand nach Lieferreihenfolge.',
+    },
+    'lo-entrega': {
+      icon: '📦',
+      title: 'Lieferung zur Baustelle',
+      text: 'Das Material kommt pünktlich und in richtiger Menge direkt zur Ackerfläche oder zur Betonpumpe.',
+      fact: 'Logistik ist für den Kunden unsichtbar… wenn sie gut funktioniert.',
+    },
+    'lo-reciclaje': {
+      icon: '♻️',
+      title: 'Gebinderecycling',
+      text: 'Betonkübel, Säcke und Paletten gehen zurück, um wiederverwendet oder rezyklelt zu werden.',
+      fact: 'Kreislaufwirtschaft senkt Abfälle und Kosten gleichzeitig.',
+    },
+  },
+};

@@ -1,0 +1,805 @@
+/* ============================================================
+   Amrize: Ruta de Constructores — Estilos
+   Paleta corporativa oficial Amrize (amrize.com)
+   ============================================================ */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  /* --- Azul Amrize (corporativo) --- */
+  --amrize-blue: #011e6a;
+  --amrize-blue-bright: #1963ff;
+  --amrize-blue-dark: #0b3d91;
+  --amrize-blue-light: #eef7ff;
+  --amrize-sky: #7cd3ff;
+
+  /* --- Naranja Amrize --- */
+  --amrize-orange: #ff4412;
+  --amrize-orange-light: #ff7a4d;
+
+  /* --- Acentos --- */
+  --amrize-green: #01c88e;
+  --amrize-red: #c42d3a;
+
+  --cream: #fff4e3;
+  --card-bg: rgba(255, 252, 247, 0.96);
+  --shadow: 0 18px 44px rgba(1, 30, 106, 0.28);
+  --shadow-soft: 0 8px 22px rgba(1, 30, 106, 0.16);
+}
+
+body {
+  font-family: "Segoe UI", "Trebuchet MS", system-ui, sans-serif;
+  overflow: hidden;
+  background: var(--amrize-blue);
+  color: var(--amrize-blue);
+}
+
+#game-canvas {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  display: block;
+  touch-action: none;
+}
+
+.hidden { display: none !important; }
+
+kbd {
+  background: var(--amrize-blue);
+  color: #fff;
+  border-radius: 5px;
+  padding: 2px 8px;
+  font-size: 0.78rem;
+  font-family: inherit;
+  font-weight: 700;
+  margin: 0 1px;
+  display: inline-block;
+}
+
+/* ==================== Logo Amrize ==================== */
+.brand-logo {
+  display: block;
+  height: auto;
+}
+.brand-logo--light { filter: brightness(0) invert(1); }
+
+.brand-bar {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.brand-tagline {
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--amrize-blue);
+}
+.brand-tagline--light { color: #fff; }
+.brand-tagline--orange { color: var(--amrize-orange); }
+
+/* Eslóganes corporativos */
+.slogan-row {
+  display: flex;
+  gap: 6px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin: 10px 0 2px;
+}
+.slogan-row--compact { margin: 10px 0 0; justify-content: flex-start; }
+
+.slogan {
+  display: inline-block;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 1.6px;
+  text-transform: uppercase;
+  color: var(--amrize-blue);
+  background: var(--amrize-blue-light);
+  border-left: 4px solid var(--amrize-orange);
+  padding: 5px 12px;
+  border-radius: 6px;
+}
+.slogan--us { border-left-color: var(--amrize-blue); }
+.slogan--ca { border-left-color: var(--amrize-orange); }
+
+/* Cabecera de marca dentro del pasaporte */
+.passport-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding-bottom: 8px;
+  margin-bottom: 4px;
+  border-bottom: 1px solid #dbe3f5;
+  flex-wrap: wrap;
+}
+.passport-brand .brand-tagline { font-size: 0.6rem; letter-spacing: 1.6px; }
+
+/* ==================== Pantalla de inicio ==================== */
+#start-screen {
+  position: fixed;
+  inset: 0;
+  z-index: 20;
+  display: flex;
+  align-items: flex-start; /* evita que la tarjeta alta se recorte arriba */
+  justify-content: center;
+  padding: 16px;
+  /* Corporate: azul Amrize como base, naranja como acento en los CTA */
+  background:
+    radial-gradient(circle at 50% 12%, rgba(25, 99, 255, 0.35), rgba(1, 30, 106, 0.82) 68%),
+    linear-gradient(160deg, #0b3d91 0%, #011e6a 55%, #011e6a 100%);
+  backdrop-filter: blur(3px);
+  overflow-y: auto;
+}
+
+.start-card {
+  background: var(--card-bg);
+  border-radius: 26px;
+  padding: 22px 38px 26px;
+  text-align: center;
+  max-width: 620px;
+  width: 100%;
+  margin: auto; /* centra verticalmente sin recortar */
+  max-height: calc(100vh - 32px);
+  overflow-y: auto; /* en pantallas bajas se desplaza, nunca se corta */
+  box-shadow: 0 26px 60px rgba(1, 30, 106, 0.55);
+  border-top: 6px solid var(--amrize-orange);
+  animation: pop-in 0.5s ease-out;
+  scrollbar-width: thin;
+  scrollbar-color: #c3d0ea transparent;
+}
+
+@keyframes pop-in {
+  from { transform: scale(0.92) translateY(20px); opacity: 0; }
+  to   { transform: scale(1) translateY(0); opacity: 1; }
+}
+
+.start-card h1 {
+  font-size: 1.6rem;
+  color: var(--amrize-blue);
+  line-height: 1.2;
+  margin: 8px 0 0;
+}
+.start-card h1 span { color: var(--amrize-orange); }
+
+.start-card .brand-bar { margin-bottom: 10px; }
+.start-card .brand-tagline--orange { margin: 0 0 14px; }
+
+.subtitle {
+  color: #4a5878;
+  margin: 8px 0 4px;
+  font-style: italic;
+}
+
+.start-card h2 {
+  font-size: 0.9rem;
+  color: var(--amrize-blue);
+  margin-bottom: 10px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+}
+
+.character-picker {
+  display: flex;
+  gap: 14px;
+  justify-content: center;
+  margin-bottom: 14px;
+  flex-wrap: wrap;
+}
+
+.char-option {
+  border: 3px solid transparent;
+  background: #f0f4fc;
+  border-radius: 16px;
+  padding: 12px 26px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  font-family: inherit;
+}
+.char-option:hover { transform: translateY(-4px); }
+.char-option.selected {
+  border-color: var(--amrize-orange);
+  background: #e8efff;
+  box-shadow: 0 8px 20px rgba(255, 68, 18, 0.32);
+}
+
+.avatar {
+  font-size: 2.1rem;
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.avatar-male   { background: linear-gradient(160deg, #eef7ff, #cfe4ff); }
+.avatar-female { background: linear-gradient(160deg, #fff0ea, #ffd9c9); }
+
+.char-option strong { color: var(--amrize-blue); font-size: 1rem; }
+.char-option small  { color: #6b7a9c; }
+
+#start-btn {
+  background: var(--amrize-orange);
+  color: #fff;
+  border: none;
+  border-radius: 14px;
+  padding: 13px 38px;
+  font-size: 1.08rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 10px 24px rgba(255, 68, 18, 0.4);
+  font-family: inherit;
+}
+#start-btn:hover { transform: translateY(-3px); background: #ff6a3d; }
+
+.controls-help {
+  margin-top: 16px;
+  padding-top: 14px;
+  border-top: 2px dashed #dbe3f5;
+  text-align: left;
+}
+.controls-help h3 {
+  font-size: 0.82rem;
+  color: #6b7a9c;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 8px;
+}
+.controls-help ul {
+  list-style: none;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 5px 16px;
+}
+.controls-help li { font-size: 0.79rem; color: #44527a; }
+.controls-help li:first-child { grid-column: 1 / -1; }
+
+.hint {
+  margin-top: 18px;
+  font-size: 0.82rem;
+  color: #7a89ab;
+}
+
+/* ==================== HUD ==================== */
+#hud {
+  position: fixed;
+  top: 18px;
+  left: 18px;
+  right: 18px;
+  z-index: 10;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  pointer-events: none;
+}
+
+.passport {
+  background: var(--card-bg);
+  border-radius: 16px;
+  padding: 12px 18px;
+  box-shadow: var(--shadow);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  border-left: 6px solid var(--amrize-orange);
+  pointer-events: auto;
+}
+.passport-title { font-size: 0.72rem; color: #6b7a9c; font-weight: 700; letter-spacing: 0.5px; }
+#player-name { font-size: 1.15rem; font-weight: 800; }
+
+.rank {
+  display: inline-block;
+  font-size: 0.72rem;
+  background: var(--amrize-orange);
+  color: #fff;
+  padding: 2px 10px;
+  border-radius: 20px;
+  font-weight: 700;
+  width: fit-content;
+}
+
+.stamps { display: flex; gap: 6px; margin-top: 6px; }
+.stamp {
+  width: 34px; height: 34px;
+  background: #fff;
+  border-radius: 9px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.1rem;
+  border: 2px solid #c3d0ea;
+  filter: grayscale(1);
+  opacity: 0.5;
+  transition: all 0.35s ease;
+}
+.stamp.unlocked {
+  border-color: var(--amrize-orange);
+  filter: none;
+  opacity: 1;
+  transform: rotate(-6deg) scale(1.08);
+  box-shadow: 0 4px 12px rgba(255, 68, 18, 0.4);
+}
+
+.objective {
+  background: var(--card-bg);
+  border-radius: 14px;
+  padding: 12px 18px;
+  box-shadow: var(--shadow);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 0.9rem;
+  color: #5c4f3d;
+  max-width: 300px;
+}
+.objective strong { color: var(--amrize-orange); font-size: 0.78rem; text-transform: uppercase; letter-spacing: 1px; }
+
+/* ==================== Letrero de interacción ==================== */
+#interact-prompt {
+  position: fixed;
+  bottom: 34px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 12;
+  background: rgba(1, 30, 106, 0.93);
+  color: #fff;
+  padding: 13px 24px;
+  border-radius: 14px;
+  font-size: 1rem;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4);
+  animation: bob 1.6s ease-in-out infinite;
+  pointer-events: none;
+  white-space: nowrap;
+}
+#interact-prompt kbd {
+  background: var(--amrize-orange);
+  margin-right: 6px;
+  animation: pulse 1.2s ease-in-out infinite;
+}
+#interact-prompt strong { color: var(--amrize-orange-light); }
+
+@keyframes bob {
+  0%, 100% { transform: translateX(-50%) translateY(0); }
+  50%      { transform: translateX(-50%) translateY(-6px); }
+}
+@keyframes pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(255, 68, 18, 0.6); }
+  50%      { box-shadow: 0 0 0 6px rgba(255, 68, 18, 0); }
+}
+
+/* ==================== Tarjeta educativa ==================== */
+#info-card {
+  position: fixed;
+  bottom: 28px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 15;
+  background: var(--card-bg);
+  border-radius: 20px;
+  padding: 26px 30px;
+  width: min(500px, 94vw);
+  box-shadow: 0 22px 54px rgba(0, 0, 0, 0.34);
+  border-top: 6px solid var(--amrize-orange);
+  animation: pop-in 0.35s ease-out;
+}
+
+#info-close {
+  position: absolute;
+  top: 12px; right: 14px;
+  border: none; background: #eee;
+  width: 30px; height: 30px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 0.95rem;
+  color: #777;
+}
+#info-close:hover { background: #d3dcf0; }
+
+#info-icon { font-size: 2.4rem; margin-bottom: 4px; }
+#info-title { color: var(--amrize-blue); font-size: 1.35rem; margin-bottom: 10px; }
+#info-text { color: #5c4f3d; line-height: 1.6; font-size: 0.98rem; }
+
+#info-fact {
+  margin-top: 14px;
+  background: #eef7ff;
+  border-left: 4px solid var(--amrize-orange);
+  border-radius: 8px;
+  padding: 11px 14px;
+  font-size: 0.9rem;
+  color: #0b3d91;
+  line-height: 1.45;
+}
+
+#info-next {
+  margin-top: 16px;
+  width: 100%;
+  background: var(--amrize-blue);
+  color: #fff;
+  border: none;
+  border-radius: 12px;
+  padding: 12px;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: inherit;
+}
+#info-next:hover { background: #0b3d91; }
+
+/* ==================== Tarjeta de planta (mapa) ==================== */
+#plant-card {
+  position: fixed;
+  bottom: 28px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 16;
+  background: var(--card-bg);
+  border-radius: 20px;
+  padding: 24px 28px;
+  width: min(440px, 94vw);
+  box-shadow: 0 22px 54px rgba(0, 0, 0, 0.34);
+  border-top: 6px solid var(--amrize-orange);
+  animation: pop-in 0.35s ease-out;
+}
+
+#plant-close {
+  position: absolute;
+  top: 12px; right: 14px;
+  border: none; background: #eee;
+  width: 30px; height: 30px;
+  border-radius: 50%;
+  cursor: pointer;
+  color: #777;
+}
+#plant-close:hover { background: #d3dcf0; }
+
+#plant-badge { font-size: 2.6rem; margin-bottom: 2px; }
+#plant-name { font-size: 1.4rem; margin-bottom: 2px; }
+#plant-site { color: #6b7a9c; font-size: 0.9rem; margin-bottom: 14px; }
+
+#plant-details {
+  display: grid;
+  gap: 6px;
+  font-size: 0.9rem;
+  color: #5c4f3d;
+  margin-bottom: 14px;
+}
+#plant-details div { display: flex; gap: 8px; }
+#plant-details b { color: var(--amrize-blue); min-width: 92px; font-weight: 700; }
+
+.plant-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 16px; }
+.plant-tags span {
+  background: #e8efff;
+  color: #b3320d;
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 20px;
+}
+
+#visit-btn {
+  width: 100%;
+  background: var(--amrize-orange);
+  color: #fff;
+  border: none;
+  border-radius: 12px;
+  padding: 14px;
+  font-size: 1.05rem;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: inherit;
+  box-shadow: 0 8px 20px rgba(255, 68, 18, 0.35);
+}
+#visit-btn:hover { background: #ff6a3d; transform: translateY(-2px); }
+
+/* ==================== Botón volver al mapa ==================== */
+#back-to-map {
+  margin-top: 10px;
+  background: var(--amrize-blue);
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  padding: 8px 16px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: inherit;
+  pointer-events: auto;
+  transition: background 0.2s ease;
+}
+#back-to-map:hover { background: #0b3d91; }
+
+/* ==================== Estadísticas del mapa ==================== */
+.map-stats {
+  background: var(--card-bg);
+  border-radius: 14px;
+  padding: 12px 18px;
+  box-shadow: var(--shadow);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 0.85rem;
+  color: #5c4f3d;
+  max-width: 280px;
+}
+.map-stats strong { color: var(--amrize-blue); }
+
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 8px;
+}
+.legend span {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.72rem;
+  color: #44527a;
+}
+.legend i {
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+/* ==================== Nombre del personaje ==================== */
+.name-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #fff;
+  border: 2px solid #d3dcf0;
+  border-radius: 14px;
+  padding: 4px 6px 4px 14px;
+  max-width: 340px;
+  margin: 0 auto;
+  transition: border-color 0.2s ease;
+}
+.name-row:focus-within { border-color: var(--amrize-blue-bright); }
+
+.name-label { font-size: 1rem; }
+
+#player-name-input {
+  flex: 1;
+  min-width: 0;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--amrize-blue);
+  padding: 10px 0;
+  font-family: inherit;
+  text-align: center;
+}
+#player-name-input::placeholder { color: #97a3c0; font-weight: 500; }
+
+.name-random {
+  border: none;
+  background: #e6ecf8;
+  color: var(--amrize-blue);
+  width: 30px; height: 30px;
+  border-radius: 9px;
+  cursor: pointer;
+  font-size: 0.95rem;
+  flex-shrink: 0;
+}
+.name-random:hover { background: #d4deef; }
+
+.name-hint {
+  font-size: 0.74rem;
+  color: #7a89ab;
+  margin: 6px 0 14px;
+}
+
+/* ==================== Buscador de plantas ==================== */
+.search-panel {
+  position: absolute;
+  top: 78px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(460px, 92vw);
+  z-index: 14;
+  pointer-events: auto;
+}
+
+.search-box {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--card-bg);
+  border-radius: 14px;
+  padding: 4px 6px 4px 14px;
+  box-shadow: var(--shadow);
+  border: 2px solid transparent;
+  transition: border-color 0.2s ease;
+}
+.search-box:focus-within { border-color: var(--amrize-blue-bright); }
+
+#search-input {
+  flex: 1;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: 0.95rem;
+  padding: 11px 0;
+  color: var(--amrize-blue);
+  font-family: inherit;
+}
+#search-input::placeholder { color: #97a3c0; }
+/* oculta la ✕ nativa del input[type=search] (usamos la nuestra) */
+#search-input::-webkit-search-cancel-button,
+#search-input::-webkit-search-decoration { -webkit-appearance: none; display: none; }
+
+#search-clear {
+  border: none;
+  background: #e6ecf8;
+  color: var(--amrize-blue);
+  width: 26px; height: 26px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 0.8rem;
+}
+#search-clear:hover { background: #d4deef; }
+
+.filter-chips {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-top: 8px;
+  justify-content: center;
+}
+
+.chip {
+  border: 1.5px solid rgba(255, 255, 255, 0.55);
+  background: rgba(1, 30, 106, 0.55);
+  color: #fff;
+  border-radius: 20px;
+  padding: 5px 12px;
+  font-size: 0.74rem;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: inherit;
+  backdrop-filter: blur(6px);
+  transition: all 0.18s ease;
+  white-space: nowrap;
+}
+.chip:hover { background: rgba(25, 99, 255, 0.75); transform: translateY(-1px); }
+.chip.active {
+  background: var(--amrize-orange);
+  border-color: var(--amrize-orange);
+  box-shadow: 0 4px 12px rgba(255, 68, 18, 0.45);
+}
+
+.search-results {
+  margin-top: 8px;
+  background: var(--card-bg);
+  border-radius: 14px;
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  max-height: 46vh;
+  overflow-y: auto;
+}
+
+.result-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  text-align: left;
+  border: none;
+  background: transparent;
+  padding: 10px 14px;
+  cursor: pointer;
+  font-family: inherit;
+  border-bottom: 1px solid #eef2fa;
+  transition: background 0.15s ease;
+}
+.result-item:hover { background: var(--amrize-blue-light); }
+.result-item:last-child { border-bottom: none; }
+
+.result-icon {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.result-text { display: flex; flex-direction: column; gap: 1px; flex: 1; min-width: 0; }
+.result-text strong { color: var(--amrize-blue); font-size: 0.9rem; }
+.result-text small { color: #6b7a9c; font-size: 0.72rem; }
+.result-go { color: var(--amrize-orange); font-weight: 800; }
+
+.result-empty {
+  padding: 14px;
+  text-align: center;
+  color: #6b7a9c;
+  font-size: 0.85rem;
+}
+
+/* ==================== Selector de idioma ==================== */
+.lang-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin: 12px 0 2px;
+  flex-wrap: wrap;
+}
+.lang-label { font-size: 1rem; }
+
+.lang-picker {
+  display: flex;
+  gap: 5px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.lang-btn {
+  border: 1.5px solid #d3dcf0;
+  background: #fff;
+  color: var(--amrize-blue);
+  border-radius: 20px;
+  padding: 5px 11px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: inherit;
+  transition: all 0.18s ease;
+}
+.lang-btn:hover { border-color: var(--amrize-blue-bright); transform: translateY(-1px); }
+.lang-btn.active {
+  background: var(--amrize-blue);
+  color: #fff;
+  border-color: var(--amrize-blue);
+}
+
+/* Variante compacta dentro del HUD */
+.lang-picker--hud {
+  margin-top: 10px;
+  justify-content: flex-start;
+  gap: 4px;
+  flex-wrap: nowrap;
+}
+.lang-picker--hud .lang-btn {
+  font-size: 0.95rem;
+  padding: 2px 7px;
+  border-width: 1px;
+  line-height: 1.3;
+}
+
+/* ==================== Toast ==================== */
+#toast {
+  position: fixed;
+  top: 22px;
+  left: 50%;
+  transform: translate(-50%, -140%);
+  z-index: 25;
+  background: var(--amrize-orange);
+  color: #fff;
+  font-weight: 700;
+  padding: 13px 26px;
+  border-radius: 14px;
+  box-shadow: 0 12px 30px rgba(255, 68, 18, 0.45);
+  opacity: 0;
+  transition: transform 0.45s cubic-bezier(.34,1.56,.64,1), opacity 0.3s ease;
+  pointer-events: none;
+}
+#toast.show {
+  transform: translate(-50%, 0);
+  opacity: 1;
+}
+
+/* ==================== Responsive ==================== */
+@media (max-width: 700px) {
+  .start-card { padding: 24px 20px; }
+  .start-card h1 { font-size: 1.45rem; }
+  .objective { display: none; }
+  .controls-help ul { font-size: 0.8rem; }
+}

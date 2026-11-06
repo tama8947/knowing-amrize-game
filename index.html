@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Amrize: Ruta de Constructores 🏗️</title>
+  <meta name="description" content="Juego educativo 3D para conocer las plantas de Amrize en Estados Unidos y Canadá. Build your ambition." />
+  <link rel="icon" type="image/png" sizes="32x32" href="/brand/favicon-32x32.png" />
+  <link rel="apple-touch-icon" href="/brand/apple-touch-icon.png" />
+  <link rel="stylesheet" href="./src/styles/main.css" />
+</head>
+<body>
+  <canvas id="game-canvas"></canvas>
+
+  <!-- ================= Menú de inicio ================= -->
+  <div id="start-screen">
+    <div class="start-card">
+      <div class="brand-bar">
+        <img class="brand-logo" src="/brand/amrize-logo.svg" alt="Amrize" width="150" height="43" />
+      </div>
+      <p class="brand-tagline brand-tagline--orange">Build your ambition</p>
+
+      <h1>🏗️ Amrize: <span data-i18n="game.title">Ruta de Constructores</span></h1>
+      <p class="subtitle" data-i18n="ui.start.subtitle"></p>
+
+      <div class="slogan-row">
+        <span class="slogan slogan--us">🇺🇸 Building America</span>
+        <span class="slogan slogan--ca">🇨🇦 Building Canada</span>
+      </div>
+
+      <!-- Selector de idioma -->
+      <div class="lang-row">
+        <span class="lang-label">🌐</span>
+        <div id="lang-picker" class="lang-picker"></div>
+      </div>
+
+      <h2 data-i18n="ui.start.choose"></h2>
+      <div class="character-picker">
+        <button class="char-option selected" data-gender="male">
+          <span class="avatar avatar-male">👷</span>
+          <strong data-i18n="ui.start.male"></strong>
+          <small data-i18n="ui.start.maleName"></small>
+        </button>
+        <button class="char-option" data-gender="female">
+          <span class="avatar avatar-female">👷‍♀️</span>
+          <strong data-i18n="ui.start.female"></strong>
+          <small data-i18n="ui.start.femaleName"></small>
+        </button>
+      </div>
+
+      <!-- Nombre personalizable -->
+      <div class="name-row">
+        <span class="name-label">🏷️</span>
+        <input
+          id="player-name-input"
+          type="text"
+          maxlength="18"
+          autocomplete="off"
+          spellcheck="false"
+          data-i18n-placeholder="ui.start.namePlaceholder"
+        />
+        <button id="name-random" class="name-random" type="button" title="Nombre aleatorio">🎲</button>
+      </div>
+      <p class="name-hint" data-i18n="ui.start.nameHint"></p>
+
+      <button id="start-btn" data-i18n="ui.start.begin"></button>
+
+      <div class="controls-help">
+        <h3>🎮 <span data-i18n="ui.start.controls"></span></h3>
+        <ul>
+          <li><kbd>↑</kbd><kbd>↓</kbd><kbd>←</kbd><kbd>→</kbd> / <kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> — <span data-i18n="ui.start.ctrlMove"></span></li>
+          <li><kbd>Espacio</kbd> — <span data-i18n="ui.start.ctrlJump"></span></li>
+          <li><kbd>E</kbd> — <span data-i18n="ui.start.ctrlInspect"></span></li>
+          <li><kbd>Shift</kbd> — <span data-i18n="ui.start.ctrlRun"></span> · <kbd>Esc</kbd> — <span data-i18n="ui.start.ctrlClose"></span></li>
+          <li>🖱️ <span data-i18n="ui.start.ctrlCamera"></span></li>
+        </ul>
+      </div>
+
+      <p class="hint" data-i18n="ui.start.hint"></p>
+    </div>
+  </div>
+
+  <!-- ================= HUD ================= -->
+  <div id="hud" class="hidden">
+    <div class="passport">
+      <div class="passport-brand">
+        <img class="brand-logo" src="/brand/amrize-logo.svg" alt="Amrize" width="96" height="27" />
+        <span class="brand-tagline">Build your ambition</span>
+      </div>
+      <span class="passport-title">🛂 <span data-i18n="ui.hud.passport"></span></span>
+      <span id="player-name">Constructor</span>
+      <span id="player-rank" class="rank">Nuevo ingreso</span>
+      <div class="stamps"></div>
+      <div id="lang-picker-hud" class="lang-picker lang-picker--hud"></div>
+      <button id="back-to-map" class="hidden">🗺️ <span data-i18n="ui.hud.backToMap"></span></button>
+    </div>
+
+    <div class="objective">
+      <strong id="objective-title">🎯 <span data-i18n="ui.hud.objective"></span></strong>
+      <span id="objective-text"></span>
+    </div>
+
+    <!-- ================= Buscador de plantas ================= -->
+    <div class="search-panel" id="search-panel">
+      <div class="search-box">
+        <input id="search-input" type="search" autocomplete="off" spellcheck="false" />
+        <button id="search-clear" class="hidden" aria-label="Limpiar">✕</button>
+      </div>
+      <div class="filter-chips" id="filter-chips"></div>
+      <div class="search-results hidden" id="search-results"></div>
+    </div>
+
+    <div class="map-stats" id="map-stats">
+      <strong>🌎 <span data-i18n="ui.hud.northAmerica"></span></strong>
+      <span id="stats-text"></span>
+      <div class="legend" id="legend"></div>
+      <div class="slogan-row slogan-row--compact">
+        <span class="slogan slogan--us">🇺🇸 Building America</span>
+        <span class="slogan slogan--ca">🇨🇦 Building Canada</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= Letrero de interacción ================= -->
+  <div id="interact-prompt" class="hidden"></div>
+
+  <!-- ================= Tarjeta educativa ================= -->
+  <div id="info-card" class="hidden">
+    <button id="info-close" aria-label="Cerrar">✕</button>
+    <div id="info-icon">🟠</div>
+    <h3 id="info-title"></h3>
+    <p id="info-text"></p>
+    <div id="info-fact">💡 <strong data-i18n="ui.card.fact"></strong>: <span></span></div>
+    <button id="info-next" data-i18n="ui.card.understood"></button>
+  </div>
+
+  <!-- ================= Tarjeta de planta (mapa) ================= -->
+  <div id="plant-card" class="hidden">
+    <button id="plant-close" aria-label="Cerrar">✕</button>
+    <div id="plant-badge">🟠</div>
+    <h3 id="plant-name"></h3>
+    <p id="plant-site"></p>
+    <div id="plant-details"></div>
+    <div class="plant-tags" id="plant-tags"></div>
+    <button id="visit-btn" data-i18n="ui.card.visit"></button>
+  </div>
+
+  <!-- ================= Notificación ================= -->
+  <div id="toast"></div>
+
+  <script type="module" src="./src/main.js"></script>
+</body>
+</html>
