@@ -8,6 +8,7 @@
 
 *Build your ambition* · 🇺🇸 Building America · 🇨🇦 Building Canada
 
+[![CI](https://github.com/tama8947/knowing-amrize-game/actions/workflows/ci.yml/badge.svg)](https://github.com/tama8947/knowing-amrize-game/actions/workflows/ci.yml)
 [![Three.js](https://img.shields.io/badge/Three.js-r160-000000?logo=three.js&logoColor=white)](https://threejs.org/)
 [![Vite](https://img.shields.io/badge/Vite-5-purple?logo=vite&logoColor=white)](https://vitejs.dev/)
 [![License](https://img.shields.io/badge/license-see%20roadmap-ff4412)](roadmap/09-lanzamiento.md)
@@ -40,7 +41,9 @@ concreto, agregados, asfalto, roofing y logística.
 - 🛂 **Pasaporte de construcción** con sellos y rango de progreso
 - 🎨 Identidad corporativa oficial: logo, azul `#011E6A` y naranja `#FF4412`
 - 📱 Modo ligero automático en móviles (`?lowfx=1`)
-- 🧪 **33 pruebas end-to-end** con Chromium headless
+- 🧠 **6 minijuegos educativos** con puntos de sostenibilidad (ver abajo)
+- 🧪 **51 pruebas end-to-end** con Chromium headless
+- 🔄 **CI/CD**: cada push compila, prueba y publica en GitHub Pages
 
 ---
 
@@ -91,7 +94,7 @@ Abre <http://localhost:5173> en el navegador. 🎉
 | `pnpm dev` | Servidor de desarrollo con HMR |
 | `pnpm build` | Build de producción → `dist/` |
 | `pnpm preview` | Previsualiza el build |
-| `pnpm test:e2e` | 33 pruebas end-to-end (Playwright + Chromium) |
+| `pnpm test:e2e` | 51 pruebas end-to-end (Playwright + Chromium) |
 | `pnpm screenshots` | Regenera las capturas de `docs/` |
 | `pnpm data:map` | Regenera la geometría del mapa |
 | `pnpm data:plants` | Regenera el catálogo de plantas |
@@ -162,6 +165,26 @@ sombras, pixel ratio 1). Para forzarlo: `pnpm dev -- --host` y abre la URL con
 | 🖱️ Arrastrar | Girar la cámara |
 | 🖱️ Rueda | Zoom |
 | Click en el suelo | Caminar hasta el punto |
+
+---
+
+## 🧠 Minijuegos
+
+Al inspeccionar ciertas estaciones (botón **«Jugar el reto»** en la tarjeta)
+se desbloquea un minijuego. Superarlo otorga **+20 puntos de sostenibilidad**
+la primera vez (después puedes repetirlo sin puntos):
+
+| Reto | Estación | ¿Qué enseña? |
+|---|---|---|
+| 🔥 **Controla el horno** | Cemento → Horno | El clinker se sinteriza a ~1.450 °C: ni frío ni quemado |
+| 🧱 **Dosifica el concreto** | Concreto → Dosificación | Rangos reales por m³ y relación agua/cemento ≤ 0.50 |
+| 🪨 **Clasifica en la zaranda** | Aggregates → Zarandeo | Granulometría: arena, grava y roca por tamaño |
+| 🛣️ **Extiende el asfalto** | Asphalt → Extendido | Compactación pareja: 3 pasadas sin oscilaciones |
+| 🧩 **Ordena el proceso** | Roofing y Logística | El orden real de las etapas de fabricación y entrega |
+
+Los puntos se guardan en `localStorage` junto con el pasaporte y se muestran
+en el HUD (⭐). Los retos están traducidos a los 5 idiomas y se re-traducen
+en caliente.
 
 ---
 
@@ -256,7 +279,20 @@ El estado completo del proyecto, fase a fase, está en [`roadmap/`](roadmap/READ
 
 | Menú | Mapa | Buscador | Planta |
 |---|---|---|---|
-| ![menú](docs/screenshot-menu.png) | ![mapa](docs/screenshot-mapa.png) | ![buscador](docs/screenshot-buscador.png) | ![planta](docs/screenshot-planta.png) |
+| Menú | Mapa | Buscador | Planta | Minijuego |
+|---|---|---|---|---|
+| ![menú](docs/screenshot-menu.png) | ![mapa](docs/screenshot-mapa.png) | ![buscador](docs/screenshot-buscador.png) | ![planta](docs/screenshot-planta.png) | ![minijuego](docs/screenshot-minijuego.png) |
+
+---
+
+## 🌐 Despliegue
+
+El workflow [`.github/workflows/ci.yml`](.github/workflows/ci.yml) se ejecuta
+en cada *push* y *pull request* a `main`:
+
+1. Instala con pnpm (lockfile congelado) y compila
+2. Ejecuta las 51 pruebas end-to-end con Chromium
+3. En cada *push* a `main`, publica `dist/` en **GitHub Pages**
 
 ---
 

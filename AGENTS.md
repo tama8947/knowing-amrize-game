@@ -20,7 +20,7 @@ pnpm install        # solo la primera vez
 pnpm dev            # servidor de desarrollo (http://localhost:5173)
 pnpm build          # build de producción → dist/
 pnpm preview        # previsualiza el build
-pnpm test:e2e       # 33 pruebas end-to-end con Chromium headless
+pnpm test:e2e       # 51 pruebas end-to-end con Chromium headless
 ```
 
 Scripts de datos (regeneran ficheros en `src/data/`):
@@ -113,7 +113,8 @@ src/
 │   ├── Interaction.js ← proximidad (REACH = 6.5) + activación
 │   └── GameState.js   ← progreso y persistencia (localStorage)
 ├── ui/
-│   └── UI.js          ← menú, HUD, buscador, tarjetas, toasts
+│   ├── UI.js          ← menú, HUD, buscador, tarjetas, toasts
+│   └── minigames/     ← marco + 5 juegos (kiln, dosing, screen, paving, order)
 ├── i18n/
 │   ├── index.js       ← motor, claves, detección, fallback
 │   └── locales/       ← es.js en.js fr.js de.js ch.js
@@ -165,6 +166,20 @@ src/
 2. Ajusta `TARGET_PER_BUSINESS` en `tools/build-plants.mjs`.
 3. `node tools/build-plants.mjs <archivo.json>` → regenera `src/data/plants.js`.
 
+### 4.5 Un minijuego nuevo
+1. Crea `src/ui/minigames/games/<Nombre>.js` exportando
+   `createXGame(body, ctx, opts)` → `{ destroy?() }`.
+   El contrato de `ctx` está documentado en la cabecera de
+   `MinigameManager.js` (`t`, `feedback`, `validate`, `progress`, `win`).
+2. Regístralo en `src/ui/minigames/games/index.js` (`GAME_TYPES` + `GAME_ICONS`).
+3. Asócialo a una estación en `GAME_FOR_STATION` (`src/data/plantInfo.js`).
+4. Añade `games.<tipo>.*` a los 5 archivos `locales/<code>.minigames.js`.
+5. Añade sus pruebas en la sección 12 de `tools/e2e-test.mjs`.
+
+> Los minijuegos son **DOM puro** (sin Three.js): fáciles de probar,
+> traducir y mantener. El overlay es modal: mientras está abierto, el
+> jugador queda quieto y `Esc` lo cierra.
+
 ---
 
 ## 5. Verificación
@@ -173,14 +188,15 @@ src/
 
 ```bash
 pnpm build        # debe compilar sin errores
-pnpm test:e2e     # debe dar 33/33
+pnpm test:e2e     # debe dar 51/51
 ```
 
 La suite E2E (Playwright + Chromium headless) cubre: carga, menú, selección de
 personaje y nombre, modo mapa, geometría, pines, vuelo de cámara, caminar,
 saltar, letrero de proximidad, tecla `E`, sellos, buscador, filtro por tipo,
-vuelo al resultado, búsqueda multiidioma, cambio de idioma en caliente y
-errores de consola.
+vuelo al resultado, búsqueda multiidioma, cambio de idioma en caliente,
+**minijuegos** (apertura, fallo, victoria, puntos, repetición, persistencia y
+traducción en caliente) y errores de consola.
 
 Si añades una funcionalidad, **añade también su prueba** en `tools/e2e-test.mjs`.
 
@@ -218,7 +234,8 @@ Referencia: [amrize.com/us/en/amrize-homepage.html](https://www.amrize.com/us/en
 
 - 38 plantas reales · 26 estados/provincias · 2 países
 - 6 líneas de negocio · 35 estaciones educativas
+- 6 minijuegos educativos con puntos de sostenibilidad
 - 5 idiomas completos con traducción en caliente
-- 33 pruebas E2E en verde
+- 51 pruebas E2E en verde
 
 El detalle de lo pendiente está en [`roadmap/`](roadmap/README.md).

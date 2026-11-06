@@ -302,7 +302,178 @@ await page.locator('#lang-picker-hud .lang-btn[data-locale="es"]').click();
 await page.waitForTimeout(400);
 
 // ---------------------------------------------------------------
-// 12. Errores de consola
+// 12. Minijuegos
+// ---------------------------------------------------------------
+// Visitamos la planta de cemento y nos acercamos al horno
+await page.evaluate(() => {
+  const g = window.__amrize;
+  g.visitPlant([...g.mapScene.pins.values()].find((p) => p.plant.business === 'cement').plant);
+});
+await page.waitForTimeout(2600);
+
+async function goToStation(stationId) {
+  await page.evaluate((id) => {
+    const g = window.__amrize;
+    const item = g.interaction.items.find((i) => i.stationId === id);
+    const pos = new g.THREE.Vector3();
+    item.object.getWorldPosition(pos);
+    g.player.group.position.set(pos.x + 2, pos.y, pos.z + 2);
+  }, stationId);
+  await page.waitForTimeout(700);
+}
+
+await goToStation('horno');
+await page.keyboard.press('e');
+await page.waitForTimeout(500);
+check('La tarjeta ofrece el minijuego', await page.locator('#info-play').isVisible());
+
+// Estación sin reto → sin botón
+await page.keyboard.press('Escape');
+await page.waitForTimeout(300);
+await goToStation('cantera');
+await page.keyboard.press('e');
+await page.waitForTimeout(500);
+check(
+  'Estación sin reto no ofrece el botón',
+  !(await page.locator('#info-play').isVisible())
+);
+await page.keyboard.press('Escape');
+await page.waitForTimeout(300);
+
+// Volvemos al horno y jugamos
+await goToStation('horno');
+await page.keyboard.press('e');
+await page.waitForTimeout(500);
+const pointsBefore = await page.evaluate(() => window.__amrize.state.sustainability);
+
+await page.locator('#info-play').click();
+await page.waitForTimeout(400);
+const mgTitle = await page.locator('#mg-title').textContent();
+check('El reto se abre desde la tarjeta', await page.locator('#minigame').isVisible(), mgTitle);
+
+// Respuesta incorrecta → pista, no gana
+await page
+  .locator('#mg-kiln-temp')
+  .evaluate((el) => { el.value = '1250'; el.dispatchEvent(new Event('input', { bubbles: true })); });
+await page.locator('#mg-validate').click();
+await page.waitForTimeout(300);
+const failShown =
+  (await page.locator('#mg-feedback').isVisible()) &&
+  !(await page.locator('#mg-success').isVisible());
+check(
+  'Temperatura fría muestra pista, no gana',
+  failShown,
+  (await page.locator('#mg-feedback').textContent()).slice(0, 46)
+);
+
+// Respuesta correcta → supera el reto
+await page
+  .locator('#mg-kiln-temp')
+  .evaluate((el) => { el.value = '1450'; el.dispatchEvent(new Event('input', { bubbles: true })); });
+await page.locator('#mg-validate').click();
+await page.waitForTimeout(400);
+check('Temperatura correcta completa el reto', await page.locator('#mg-success').isVisible());
+
+const pointsAfter = await page.evaluate(() => window.__amrize.state.sustainability);
+check(
+  'Primer reto: +20 puntos de sostenibilidad',
+  pointsAfter === pointsBefore + 20,
+  `${pointsBefore} → ${pointsAfter}`
+);
+const hudPoints = await page.locator('#points-value').textContent();
+check('HUD actualiza los puntos', Number(hudPoints) === pointsAfter, hudPoints);
+
+// Repetir no vuelve a dar puntos
+await page.locator('#mg-retry').click();
+await page.waitForTimeout(300);
+await page
+  .locator('#mg-kiln-temp')
+  .evaluate((el) => { el.value = '1450'; el.dispatchEvent(new Event('input', { bubbles: true })); });
+await page.locator('#mg-validate').click();
+await page.waitForTimeout(400);
+const pointsRepeat = await page.evaluate(() => window.__amrize.state.sustainability);
+check('Repetir el reto no duplica puntos', pointsRepeat === pointsAfter, `${pointsRepeat}`);
+check('La repetición avanza sin puntos extra', await page.locator('#mg-repeat-note').isVisible());
+
+// Continuar → vuelve a la tarjeta con el reto marcado
+await page.locator('#mg-continue').click();
+await page.waitForTimeout(400);
+check('«Continuar» vuelve a la tarjeta', await page.locator('#info-card').isVisible());
+const playLabel = await page.locator('#info-play-label').textContent();
+check('La tarjeta marca el reto como completado', /completado/i.test(playLabel), playLabel);
+
+// Persistencia en localStorage
+const saved = await page.evaluate(() =>
+  JSON.parse(localStorage.getItem('amrize-game-progress-v1'))
+);
+check(
+  'Progreso de retos guardado en localStorage',
+  Array.isArray(saved.games) && saved.games.includes('horno'),
+  (saved.games || []).join(',')
+);
+await page.keyboard.press('Escape');
+await page.waitForTimeout(300);
+
+// Reto de orden (logística): clics en el orden correcto
+await page.evaluate(() => window.__amrize.ui.openGame('lo-pedido'));
+await page.waitForTimeout(400);
+check('Reto «ordena el proceso» se abre', await page.locator('#minigame').isVisible());
+for (const key of ['request', 'plan', 'dispatch', 'deliver']) {
+  await page.locator(`#mg-body .mg-chip[data-key="${key}"]`).click();
+  await page.waitForTimeout(150);
+}
+await page.waitForTimeout(300);
+check('Secuencia correcta completa el reto', await page.locator('#mg-success').isVisible());
+await page.locator('#mg-continue').click();
+await page.waitForTimeout(300);
+
+// Dosificación (concreto): rangos correctos
+await page.evaluate(() => window.__amrize.ui.openGame('co-dosificacion'));
+const setRange = (sel, val) =>
+  page
+    .locator(sel)
+    .evaluate((el, v) => { el.value = String(v); el.dispatchEvent(new Event('input', { bubbles: true })); }, val);
+await setRange('#mg-dos-cement', 375);
+await setRange('#mg-dos-water', 170);
+await setRange('#mg-dos-aggregates', 1800);
+await page.locator('#mg-validate').click();
+await page.waitForTimeout(400);
+check('Dosificación correcta completa el reto', await page.locator('#mg-success').isVisible());
+await page.locator('#mg-continue').click();
+await page.waitForTimeout(300);
+
+// Traducción en caliente del minijuego abierto
+// (el overlay es modal: el HUD queda detrás, se pulsa vía JS)
+await page.evaluate(() => window.__amrize.ui.openGame('ag-zarandeo'));
+await page.waitForTimeout(300);
+await page.evaluate(() =>
+  document.querySelector('#lang-picker-hud .lang-btn[data-locale="fr"]').click()
+);
+await page.waitForTimeout(500);
+const mgTitleFR = await page.locator('#mg-title').textContent();
+check('Minijuego re-traducido en caliente', /Trie/i.test(mgTitleFR), mgTitleFR);
+await page.evaluate(() =>
+  document.querySelector('#lang-picker-hud .lang-btn[data-locale="es"]').click()
+);
+await page.waitForTimeout(300);
+
+// Pavimentación: el marcador se mueve
+await page.evaluate(() => window.__amrize.ui.openGame('as-extendido'));
+await page.waitForTimeout(500);
+const markerPos1 = await page.locator('.mg-pave-marker').evaluate((el) => el.style.left);
+await page.waitForTimeout(400);
+const markerPos2 = await page.locator('.mg-pave-marker').evaluate((el) => el.style.left);
+check(
+  'Pavimentación con marcador animado',
+  markerPos1 !== markerPos2 && (await page.locator('#minigame').isVisible()),
+  `${markerPos1} → ${markerPos2}`
+);
+await page.locator('#mg-close').click();
+await page.waitForTimeout(300);
+check('Botón ✕ cierra el reto', !(await page.locator('#minigame').isVisible()));
+
+// ---------------------------------------------------------------
+// 13. Errores de consola
 // ---------------------------------------------------------------
 const realErrors = errors.filter((e) => !/favicon|404/i.test(e));
 check('Sin errores de consola', realErrors.length === 0, realErrors.slice(0, 3).join(' | '));

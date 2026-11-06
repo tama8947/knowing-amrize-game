@@ -11,6 +11,7 @@ export class GameState {
     this.playerName = ''; // nombre personalizado (opcional)
     this.visited = new Set();  // ids de estaciones visitadas
     this.stamps = new Set();    // negocios con sello obtenido
+    this.games = new Set();     // ids de minijuegos superados
     this.sustainability = 0;    // puntos de sostenibilidad
     this.load();
   }
@@ -31,6 +32,21 @@ export class GameState {
     return isNew;
   }
 
+  /**
+   * Completa un minijuego.
+   * @param {string} gameId — id de la estación del reto (p.ej. 'horno')
+   * @returns {{ first: boolean, points: number }} la primera vez suma 20 puntos
+   */
+  completeGame(gameId) {
+    const first = !this.games.has(gameId);
+    if (first) {
+      this.games.add(gameId);
+      this.sustainability += 20;
+      this.save();
+    }
+    return { first, points: first ? 20 : 0 };
+  }
+
   /** Rango del jugador según progreso. */
   get rank() {
     const n = this.stamps.size;
@@ -48,6 +64,7 @@ export class GameState {
         JSON.stringify({
           visited: [...this.visited],
           stamps: [...this.stamps],
+          games: [...this.games],
           sustainability: this.sustainability,
           gender: this.gender,
           playerName: this.playerName,
@@ -65,6 +82,7 @@ export class GameState {
       const data = JSON.parse(raw);
       this.visited = new Set(data.visited || []);
       this.stamps = new Set(data.stamps || []);
+      this.games = new Set(data.games || []);
       this.sustainability = data.sustainability || 0;
       if (data.gender) this.gender = data.gender;
       if (data.playerName) this.playerName = data.playerName;
@@ -76,6 +94,7 @@ export class GameState {
   reset() {
     this.visited.clear();
     this.stamps.clear();
+    this.games.clear();
     this.sustainability = 0;
     this.save();
   }

@@ -59,8 +59,9 @@ export class Interaction {
       }
     }
 
-    // Si la tarjeta está abierta, el letrero se oculta (y vuelve al cerrarse)
-    const target = this.ui.isInfoOpen ? null : best;
+    // Si la tarjeta o un minijuego están abiertos, el letrero se oculta
+    // (y vuelve a mostrarse al cerrarlos)
+    const target = this.ui.isInfoOpen || this.ui.gameOpen ? null : best;
 
     if (target !== this.hovered) {
       this.hovered = target;

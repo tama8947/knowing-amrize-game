@@ -35,7 +35,8 @@ de tareas marcables (`[x]` hecho · `[ ]` pendiente).
 | Países | 2 (EE.UU. y Canadá) |
 | Líneas de negocio | 6 |
 | Estaciones educativas | 35 |
+| Minijuegos | 6 retos (5 tipos) |
 | Idiomas | 5 |
-| Pruebas end-to-end | 33 |
+| Pruebas end-to-end | 51 |
 | Triángulos del mapa | ~89 k |
 | Build de producción | ~1.1 MB (three: 172 KB gzip) |

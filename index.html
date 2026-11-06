@@ -5,8 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Amrize: Ruta de Constructores 🏗️</title>
   <meta name="description" content="Juego educativo 3D para conocer las plantas de Amrize en Estados Unidos y Canadá. Build your ambition." />
-  <link rel="icon" type="image/png" sizes="32x32" href="/brand/favicon-32x32.png" />
-  <link rel="apple-touch-icon" href="/brand/apple-touch-icon.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="./brand/favicon-32x32.png" />
+  <link rel="apple-touch-icon" href="./brand/apple-touch-icon.png" />
   <link rel="stylesheet" href="./src/styles/main.css" />
 </head>
 <body>
@@ -16,7 +16,7 @@
   <div id="start-screen">
     <div class="start-card">
       <div class="brand-bar">
-        <img class="brand-logo" src="/brand/amrize-logo.svg" alt="Amrize" width="150" height="43" />
+        <img class="brand-logo" src="./brand/amrize-logo.svg" alt="Amrize" width="150" height="43" />
       </div>
       <p class="brand-tagline brand-tagline--orange">Build your ambition</p>
 
@@ -84,13 +84,14 @@
   <div id="hud" class="hidden">
     <div class="passport">
       <div class="passport-brand">
-        <img class="brand-logo" src="/brand/amrize-logo.svg" alt="Amrize" width="96" height="27" />
+        <img class="brand-logo" src="./brand/amrize-logo.svg" alt="Amrize" width="96" height="27" />
         <span class="brand-tagline">Build your ambition</span>
       </div>
       <span class="passport-title">🛂 <span data-i18n="ui.hud.passport"></span></span>
       <span id="player-name">Constructor</span>
       <span id="player-rank" class="rank">Nuevo ingreso</span>
       <div class="stamps"></div>
+      <span id="hud-points" class="hud-points" title="Puntos de sostenibilidad">⭐ <b id="points-value">0</b></span>
       <div id="lang-picker-hud" class="lang-picker lang-picker--hud"></div>
       <button id="back-to-map" class="hidden">🗺️ <span data-i18n="ui.hud.backToMap"></span></button>
     </div>
@@ -131,6 +132,7 @@
     <h3 id="info-title"></h3>
     <p id="info-text"></p>
     <div id="info-fact">💡 <strong data-i18n="ui.card.fact"></strong>: <span></span></div>
+    <button id="info-play" class="hidden"><span id="info-play-label">🎮 Jugar el reto</span></button>
     <button id="info-next" data-i18n="ui.card.understood"></button>
   </div>
 
@@ -143,6 +145,36 @@
     <div id="plant-details"></div>
     <div class="plant-tags" id="plant-tags"></div>
     <button id="visit-btn" data-i18n="ui.card.visit"></button>
+  </div>
+
+  <!-- ================= Minijuegos ================= -->
+  <div id="minigame" class="hidden" role="dialog" aria-modal="true" aria-labelledby="mg-title">
+    <div class="mg-panel">
+      <header class="mg-head">
+        <span id="mg-badge">🎮</span>
+        <h3 id="mg-title"></h3>
+        <button id="mg-close" aria-label="Cerrar">✕</button>
+      </header>
+      <p id="mg-desc" class="mg-desc"></p>
+      <div id="mg-body" class="mg-body"></div>
+      <div id="mg-feedback" class="mg-feedback hidden"></div>
+      <footer class="mg-foot">
+        <span id="mg-progress"></span>
+        <button id="mg-validate" class="hidden"></button>
+      </footer>
+
+      <div id="mg-success" class="mg-success hidden">
+        <div class="mg-success-icon">🎉</div>
+        <h3 id="mg-success-title"></h3>
+        <p id="mg-success-text"></p>
+        <div class="mg-points">⭐ <b id="mg-points-value">+20</b> <span id="mg-points-label"></span></div>
+        <p id="mg-repeat-note" class="mg-repeat hidden"></p>
+        <div class="mg-actions">
+          <button id="mg-retry"></button>
+          <button id="mg-continue"></button>
+        </div>
+      </div>
+    </div>
   </div>
 
   <!-- ================= Notificación ================= -->

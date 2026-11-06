@@ -13,6 +13,8 @@ import {
   LOCALES,
 } from '../i18n/index.js';
 import { PLANTS } from '../data/plants.js';
+import { GAME_FOR_STATION } from '../data/plantInfo.js';
+import { MinigameManager } from './minigames/MinigameManager.js';
 
 const BUSINESS_COLORS = {
   aggregates: '#9a8b7a',
@@ -64,6 +66,17 @@ export class UI {
     this.nameRandom = document.getElementById('name-random');
     this.objectiveTitle = document.getElementById('objective-title');
     this.objectiveText = document.getElementById('objective-text');
+
+    // Minijuegos
+    this.playButton = document.getElementById('info-play');
+    this.playLabel = document.getElementById('info-play-label');
+    this.pointsValue = document.getElementById('points-value');
+    this.hudPoints = document.getElementById('hud-points');
+    this.gameStationId = null;
+    this.minigame = new MinigameManager({
+      onComplete: (stationId) => this.handleGameComplete(stationId),
+      onClose: () => this.closeGame(),
+    });
 
     // Buscador
     this.searchPanel = document.getElementById('search-panel');
@@ -207,6 +220,9 @@ export class UI {
 
     document.getElementById('info-close').addEventListener('click', () => this.hideInfo());
     document.getElementById('info-next').addEventListener('click', () => this.hideInfo());
+    this.playButton?.addEventListener('click', () => {
+      if (this.currentStationId) this.openGame(this.currentStationId);
+    });
     document.getElementById('plant-close').addEventListener('click', () => this.hidePlantCard());
 
     document.getElementById('visit-btn').addEventListener('click', () => {
@@ -429,9 +445,18 @@ export class UI {
   }
 
   syncProgress(state) {
+    this._state = state;
     state.stamps.forEach((k) => this.unlockStamp(k));
     this.setPlayer(state.gender, state.rank, state.playerName);
     if (state.playerName && this.nameInput) this.nameInput.value = state.playerName;
+    this.syncPoints();
+  }
+
+  /** Actualiza el contador de puntos del HUD. */
+  syncPoints() {
+    if (!this._state || !this.pointsValue) return;
+    this.pointsValue.textContent = this._state.sustainability;
+    if (this.hudPoints) this.hudPoints.title = t('ui.hud.points');
   }
 
   // ---------------------------------------------------------------
@@ -465,12 +490,64 @@ export class UI {
     document.getElementById('info-title').textContent = info.title;
     document.getElementById('info-text').textContent = info.text;
     document.querySelector('#info-fact span').textContent = info.fact;
+
+    // ¿Esta estación tiene un minijuego? Muestra u oculta el botón
+    if (this.playButton) {
+      const hasGame = Boolean(GAME_FOR_STATION[stationId]);
+      this.playButton.classList.toggle('hidden', !hasGame);
+      if (hasGame) {
+        const done = this._state?.games?.has(stationId);
+        this.playLabel.textContent = done ? t('ui.card.played') : t('ui.card.play');
+      }
+    }
+
     this.infoCard.classList.remove('hidden');
   }
 
   hideInfo() {
     this.infoCard.classList.add('hidden');
     this.currentStationId = null;
+  }
+
+  // ---------------------------------------------------------------
+  // Minijuegos
+  // ---------------------------------------------------------------
+  /**
+   * Abre el minijuego de una estación y oculta la tarjeta educativa.
+   * @param {string} stationId
+   * @returns {boolean} false si la estación no tiene reto
+   */
+  openGame(stationId) {
+    if (!this.minigame.open(stationId)) return false;
+    this.gameStationId = stationId;
+    this.hideInfo();
+    this.hidePrompt();
+    return true;
+  }
+
+  /**
+   * Cierra el minijuego. Por defecto vuelve a mostrar la tarjeta.
+   * @param {boolean} reopen
+   */
+  closeGame(reopen = true) {
+    if (!this.gameOpen) return;
+    const stationId = this.gameStationId;
+    this.minigame.close();
+    this.gameStationId = null;
+    if (reopen && stationId) this.showInfo(stationId);
+  }
+
+  /** ¿Hay un minijuego abierto? (lo consultan Interaction y main.js). */
+  get gameOpen() {
+    return this.minigame.isOpen;
+  }
+
+  /** Al superar un reto: registra los puntos y devuelve el resultado. */
+  handleGameComplete(stationId) {
+    if (!this._state) return { first: false, points: 0 };
+    const result = this._state.completeGame(stationId);
+    this.syncPoints();
+    return result;
   }
 
   get isInfoOpen() {
@@ -539,6 +616,11 @@ export class UI {
     // Resultados del buscador
     if (!this.searchResults.classList.contains('hidden')) {
       this.renderResults();
+    }
+
+    // Minijuego abierto
+    if (this.gameOpen) {
+      this.minigame.refresh();
     }
   }
 

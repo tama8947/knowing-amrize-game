@@ -17,16 +17,37 @@ import en from './locales/en.js';
 import fr from './locales/fr.js';
 import de from './locales/de.js';
 import ch from './locales/ch.js';
+// Textos de los minijuegos: van en ficheros aparte para no mezclar
+// el contenido de juego con el de la interfaz general.
+import esMini from './locales/es.minigames.js';
+import enMini from './locales/en.minigames.js';
+import frMini from './locales/fr.minigames.js';
+import deMini from './locales/de.minigames.js';
+import chMini from './locales/ch.minigames.js';
+
+/** Une los textos generales con los de minijuegos (fusión superficial por bloque). */
+function mergeLocale(base, extra) {
+  if (!extra) return base;
+  return {
+    ...base,
+    ui: {
+      ...base.ui,
+      card: { ...base.ui?.card, ...extra.ui?.card },
+      hud: { ...base.ui?.hud, ...extra.ui?.hud },
+    },
+    games: extra.games,
+  };
+}
 
 const STORAGE_KEY = 'amrize-game-locale';
 
 /** Registro de idiomas disponibles. */
 export const LOCALES = {
-  es: { name: 'Español', flag: '🇨🇴', locale: 'es-CO', file: es },
-  en: { name: 'English', flag: '🇺🇸', locale: 'en-US', file: en },
-  fr: { name: 'Français', flag: '🇨🇦', locale: 'fr-CA', file: fr },
-  de: { name: 'Deutsch', flag: '🇩🇪', locale: 'de-DE', file: de },
-  ch: { name: 'Schweizerdeutsch', flag: '🇨🇭', locale: 'de-CH', file: ch },
+  es: { name: 'Español', flag: '🇨🇴', locale: 'es-CO', file: mergeLocale(es, esMini) },
+  en: { name: 'English', flag: '🇺🇸', locale: 'en-US', file: mergeLocale(en, enMini) },
+  fr: { name: 'Français', flag: '🇨🇦', locale: 'fr-CA', file: mergeLocale(fr, frMini) },
+  de: { name: 'Deutsch', flag: '🇩🇪', locale: 'de-DE', file: mergeLocale(de, deMini) },
+  ch: { name: 'Schweizerdeutsch', flag: '🇨🇭', locale: 'de-CH', file: mergeLocale(ch, chMini) },
 };
 
 let current = 'es';

@@ -9,7 +9,8 @@ volver.
 - [x] Rango del jugador: Nuevo ingreso → Aprendiz → Constructor → Experto → Embajador Amrize
 - [x] Persistencia en `localStorage` (sin cuenta ni servidor)
 - [x] Registro de estaciones visitadas
-- [ ] Puntos de **sostenibilidad** visibles en el HUD
+- [x] **Minijuegos** (6 retos con botón «Jugar el reto» en la tarjeta)
+- [x] Puntos de **sostenibilidad** visibles en el HUD (⭐, +20 por reto)
 - [ ] Desbloqueo de regiones: Costa Este → Medio Oeste → Sur → Oeste → Canadá
 - [ ] Progreso por planta (estaciones visitadas / total)
 - [ ] Resumen al terminar una planta
@@ -23,17 +24,17 @@ volver.
 
 ## Minijuegos
 
-- [ ] Ordenar las etapas del proceso (drag & drop)
-- [ ] Dosificar la mezcla de concreto ( sliders )
-- [ ] Clasificar rocas por granulometría en la zaranda
-- [ ] Controlar el horno: temperatura y velocidad del clinker
-- [ ] Pavimentar una carretera recta y pareja
+- [x] Ordenar las etapas del proceso (clics en el orden correcto)
+- [x] Dosificar la mezcla de concreto (sliders con rangos reales)
+- [x] Clasificar rocas por granulometría en la zaranda
+- [x] Controlar el horno: temperatura del clinker (1425–1475 °C)
+- [x] Pavimentar una carretera recta y pareja (3 pasadas)
 - [ ] Instalar membrana sellando las juntas antes de la lluvia
 - [ ] Planear la ruta de camiones más eficiente y baja en CO₂
 
 ## Pendiente
 
-- [ ] Reconciliar el "puntos de sostenibilidad" con un criterio claro
+- [x] Criterio de puntos claros: +10 por estación, +50 por sello, +20 por reto
 - [ ] Panel de estadísticas del jugador
 - [ ] Modo "demostración" para screening (sin puntuación, pantalla completa)
 - [ ] Exportar el progreso como imagen para compartir

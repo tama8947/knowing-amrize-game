@@ -37,6 +37,25 @@ await page.evaluate(() => {
 await page.waitForTimeout(3500);
 await page.screenshot({ path: shot('screenshot-planta.png') });
 
+// Minijuego (control del horno) abierto desde la tarjeta educativa
+await page.evaluate(() => {
+  const g = window.__amrize;
+  const item = g.interaction.items.find((i) => i.stationId === 'horno');
+  const pos = new g.THREE.Vector3();
+  item.object.getWorldPosition(pos);
+  g.player.group.position.set(pos.x + 2, pos.y, pos.z + 2);
+});
+await page.waitForTimeout(800);
+await page.keyboard.press('e');
+await page.waitForTimeout(600);
+await page.locator('#info-play').click();
+await page.waitForTimeout(600);
+await page
+  .locator('#mg-kiln-temp')
+  .evaluate((el) => { el.value = '1450'; el.dispatchEvent(new Event('input', { bubbles: true })); });
+await page.waitForTimeout(300);
+await page.screenshot({ path: shot('screenshot-minijuego.png') });
+
 console.log('📸 Capturas generadas en docs/');
 await browser.close();
 server.kill();

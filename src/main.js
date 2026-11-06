@@ -24,7 +24,7 @@ import { Interaction } from './game/Interaction.js';
 import { GameState } from './game/GameState.js';
 import { UI } from './ui/UI.js';
 import { getBusinesses } from './data/plantInfo.js';
-import { t } from './i18n/index.js';
+import { t, tStation } from './i18n/index.js';
 
 // ---------------------------------------------------------------
 // Inicialización
@@ -98,6 +98,7 @@ function goToMap(animate = true) {
   ui.hidePrompt();
   ui.hideInfo();
   ui.hidePlantCard();
+  ui.closeGame(false); // cierra un minijuego abierto, sin reabrir la tarjeta
 
   mapScene.group.visible = true;
   mapGroup.visible = true;
@@ -281,18 +282,22 @@ engine.onUpdate((dt, elapsed) => {
   if (mode === 'plant') {
     plantInstance?.update(dt, elapsed);
 
+    // Mientras un minijuego está abierto, el jugador queda quieto
+    // (tampoco salta ni corre): el foco es el reto.
+    const frozen = ui.gameOpen;
+
     // --- Jugador ---
-    const move = input.getMoveVector();
-    const running = input.isDown('shift');
-    const wantJump = input.wasPressed(' ');
+    const move = frozen ? { x: 0, z: 0 } : input.getMoveVector();
+    const running = !frozen && input.isDown('shift');
+    const wantJump = !frozen && input.wasPressed(' ');
 
     player.update(dt, move, engine.camera, wantJump, running);
 
     // Interacción por proximidad → muestra el letrero
     interaction.update(player.group.position);
 
-    // E: inspeccionar equipo / cerrar tarjeta
-    if (input.wasPressed('e')) {
+    // E: inspeccionar equipo / cerrar tarjeta (no mientras hay un reto abierto)
+    if (!frozen && input.wasPressed('e')) {
       if (ui.isInfoOpen) {
         ui.hideInfo();
       } else if (interaction.activate()) {
@@ -300,12 +305,17 @@ engine.onUpdate((dt, elapsed) => {
         state.visit(item.stationId, currentPlant?.business);
         ui.setPlayer(state.gender, state.rank, state.playerName);
         ui.unlockStamp(currentPlant?.business);
+        ui.syncPoints();
         mapScene.markVisited(currentPlant?.id);
-        ui.showToast(`${t('ui.toast.inspected')}: ${item.stationId}`, '🔍');
+        ui.showToast(`${t('ui.toast.inspected')}: ${tStation(item.stationId).title}`, '🔍');
       }
     }
 
-    if (input.wasPressed('escape')) ui.hideInfo();
+    // Esc: cierra la capa superior (minijuego → tarjeta)
+    if (input.wasPressed('escape')) {
+      if (ui.gameOpen) ui.closeGame();
+      else ui.hideInfo();
+    }
 
     // La cámara sigue al jugador suavemente
     if (!flight.active) {
@@ -333,4 +343,4 @@ window.addEventListener('keydown', (e) => {
 });
 
 // Depuración
-window.__amrize = { engine, player, state, interaction, mapScene, goToMap, visitPlant, THREE };
+window.__amrize = { engine, player, state, interaction, mapScene, goToMap, visitPlant, THREE, ui };
