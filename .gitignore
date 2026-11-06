@@ -1,7 +1,40 @@
+# Dependencias
 node_modules/
+
+# Build
 dist/
 .vite/
-*.log
+
+# Sistema
 .DS_Store
+Thumbs.db
+
+# Editores
 .vscode/
 .idea/
+*.swp
+
+# Logs
+*.log
+npm-debug.log*
+pnpm-debug.log*
+
+# Tests / capturas locales
+test-results/
+playwright-report/
+blob-report/
+.playwright/
+
+# Entorno
+.env
+.env.local
+.env.*.local
+
+# Datos de origen (no versionados: se regeneran con pnpm data:plants)
+data/amrize_locations.json
+tools/amrize_locations.json
+
+# Sistema operativo / editores (duplicados por seguridad)
+*.swp
+*~
+.DS_Store

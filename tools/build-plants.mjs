@@ -3,8 +3,15 @@
  * 🌎 tools/build-plants.mjs
  * Genera src/data/plants.js con el catálogo curado de plantas de Amrize.
  *
- * Fuente: datos de ubicaciones públicas de amrize.com (locations page).
- * Uso:  node tools/build-plants.mjs [ruta/amrize_locations.json]
+ * Fuente: datos de ubicaciones públicas de amrize.com (la página "Locations"
+ * incluye el JSON con las 647 ubicaciones en un array llamado "id": …).
+ *
+ * Uso:
+ *   node tools/build-plants.mjs <ruta/amrize_locations.json>
+ *   pnpm data:plants -- <ruta/amrize_locations.json>
+ *
+ * Si no se pasa ruta, busca en data/amrize_locations.json (gitignored) y,
+ * si tampoco está, explica cómo obtenerlo.
  */
 import fs from 'node:fs';
 import path from 'node:path';
@@ -12,8 +19,32 @@ import { fileURLToPath } from 'node:url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, '..');
-const source = process.argv[2] || '/tmp/amrize_locations.json';
 
+/** Rutas donde buscar el JSON de ubicaciones. */
+const CANDIDATES = [
+  process.argv[2],
+  path.join(ROOT, 'data', 'amrize_locations.json'),
+  path.join(ROOT, 'tools', 'amrize_locations.json'),
+].filter(Boolean);
+
+const source = CANDIDATES.find((p) => fs.existsSync(p));
+
+if (!source) {
+  console.error('❌ No se encontró el fichero de ubicaciones.');
+  console.error('');
+  console.error('   Búsqueda en:');
+  CANDIDATES.forEach((c) => console.error(`     · ${c}`));
+  console.error('');
+  console.error('   Cómo obtenerlo:');
+  console.error('   1. Abre https://www.amrize.com/us/en/locations.html');
+  console.error('   2. En el HTML, busca el array JSON que empieza con "id":');
+  console.error('      (contiene 647 ubicaciones con "coordsLat" y "coordsLng")');
+  console.error('   3. Guárdalo como amrize_locations.json');
+  console.error('   4. Ejecuta:  node tools/build-plants.mjs <ruta/al/fichero>');
+  process.exit(1);
+}
+
+console.log(`📂 Leyendo ${path.relative(ROOT, source) || source}`);
 const all = JSON.parse(fs.readFileSync(source, 'utf8'));
 
 /** Clasifica una ubicación en una de las 6 líneas de negocio del juego. */

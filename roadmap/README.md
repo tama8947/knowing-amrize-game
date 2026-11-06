@@ -23,7 +23,7 @@ de tareas marcables (`[x]` hecho · `[ ]` pendiente).
 1. **Contenido separado del código** — los textos viven en `src/i18n/locales/`.
 2. **Autenticidad** — los datos vienen de fuentes reales (Natural Earth, amrize.com).
 3. **Reproducibilidad** — todo dato generado se regenera con un script en `tools/`.
-4. **Todo verificable** — cada cambio se prueba con `npm run test:e2e`.
+4. **Todo verificable** — cada cambio se prueba con `pnpm test:e2e`.
 5. **Identidad coherente** — azul `#011E6A`, naranja `#FF4412`, logo y eslóganes oficiales.
 
 ## Resumen numérico

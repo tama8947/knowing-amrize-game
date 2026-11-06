@@ -13,21 +13,27 @@ impulso, gana la regla.
 
 ## 1. Comandos
 
+**Gestor de paquetes: pnpm** (no uses npm ni yarn en este repositorio).
+
 ```bash
-npm install          # solo la primera vez
-npm run dev          # servidor de desarrollo (http://localhost:5173)
-npm run build        # build de producción → dist/
-npm run preview      # previsualiza el build
-npm run test:e2e     # 33 pruebas end-to-end con Chromium headless
+pnpm install        # solo la primera vez
+pnpm dev            # servidor de desarrollo (http://localhost:5173)
+pnpm build          # build de producción → dist/
+pnpm preview        # previsualiza el build
+pnpm test:e2e       # 33 pruebas end-to-end con Chromium headless
 ```
 
 Scripts de datos (regeneran ficheros en `src/data/`):
 
 ```bash
-node tools/build-map-data.mjs    # geometría de estados/provincias (Natural Earth)
-node tools/build-plants.mjs      # catálogo de 38 plantas reales
-node tools/screenshots.mjs       # regenera docs/screenshot-*.png
+pnpm data:map        # geometría de estados/provincias (Natural Earth)
+pnpm data:plants     # catálogo de 38 plantas reales
+pnpm screenshots     # regenera docs/screenshot-*.png
 ```
+
+> Equivalentes directos: `node tools/build-map-data.mjs`, etc.
+> Los scripts usan el binario local de Vite (`tools/devServer.mjs`), así que
+> funcionan igual con pnpm, npm o yarn.
 
 > `build-plants.mjs` espera por defecto `/tmp/amrize_locations.json`. Pasa la
 > ruta como argumento: `node tools/build-plants.mjs <archivo.json>`.
@@ -166,8 +172,8 @@ src/
 **Antes de dar por terminado cualquier cambio:**
 
 ```bash
-npm run build        # debe compilar sin errores
-npm run test:e2e     # debe dar 33/33
+pnpm build        # debe compilar sin errores
+pnpm test:e2e     # debe dar 33/33
 ```
 
 La suite E2E (Playwright + Chromium headless) cubre: carga, menú, selección de
@@ -188,6 +194,8 @@ Si añades una funcionalidad, **añade también su prueba** en `tools/e2e-test.m
 - Emojis en los comentarios de sección para-orientarse rápido (igual que el
   resto del repositorio).
 - Sin dependencias nuevas sin justificarlo en el README.
+- **Usa `pnpm`**, nunca `npm install` ni `yarn` (el repo tiene `pnpm-lock.yaml`).
+  Si añades una dependencia, actualiza también `pnpm-lock.yaml`.
 - Preferencia por lo declarativo: datos en `src/data/`, lógica en `src/game/`.
 
 ---

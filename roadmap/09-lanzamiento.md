@@ -4,7 +4,7 @@ Objetivo: publicarlo y ponerlo en manos de la gente de Amrize.
 
 ## Build y hosting
 
-- [x] Build de producción con Vite (`npm run build`)
+- [x] Build de producción con Vite (`pnpm build`)
 - [x] Chunk separado para Three.js
 - [ ] Publicar en Netlify / Vercel / GitHub Pages
 - [ ] Dominio propio (p.ej. `amrize-game.com`)

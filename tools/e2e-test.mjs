@@ -11,12 +11,11 @@
  * Uso: node tools/e2e-test.mjs
  */
 import { chromium } from 'playwright';
-import { spawn } from 'node:child_process';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { ROOT, startDevServer, waitForServer } from './devServer.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const ROOT = path.resolve(__dirname, '..');
 const PORT = 4188;
 const URL = `http://127.0.0.1:${PORT}/`;
 
@@ -29,15 +28,12 @@ function check(name, ok, detail = '') {
 }
 
 // --- Servidor de desarrollo ---
-const server = spawn('npx', ['vite', '--port', String(PORT), '--host', '127.0.0.1'], {
-  cwd: ROOT,
-  stdio: 'ignore',
-});
+const server = startDevServer(PORT);
 
 const cleanup = () => { try { server.kill('SIGTERM'); } catch {} };
 process.on('exit', cleanup);
 
-await new Promise((r) => setTimeout(r, 3500));
+await waitForServer(URL);
 
 const browser = await chromium.launch({
   args: ['--use-gl=swiftshader', '--enable-unsafe-swiftshader', '--no-sandbox'],

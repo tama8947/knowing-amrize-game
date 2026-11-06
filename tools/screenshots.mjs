@@ -3,14 +3,12 @@
  * 📸 tools/screenshots.mjs — Genera las capturas del proyecto
  */
 import { chromium } from 'playwright';
-import { spawn } from 'node:child_process';
 import path from 'node:path';
-import { fileURLToPath } from 'node:url';
+import { ROOT, startDevServer, waitForServer } from './devServer.mjs';
 
-const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const PORT = 4198;
-const server = spawn('npx', ['vite', '--port', String(PORT), '--host', '127.0.0.1'], { cwd: ROOT, stdio: 'ignore' });
-await new Promise((r) => setTimeout(r, 3500));
+const server = startDevServer(PORT);
+await waitForServer(`http://127.0.0.1:${PORT}/`);
 
 const browser = await chromium.launch({ args: ['--use-gl=swiftshader', '--enable-unsafe-swiftshader', '--no-sandbox'] });
 const page = await browser.newPage({ viewport: { width: 1280, height: 800 } });

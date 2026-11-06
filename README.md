@@ -44,28 +44,109 @@ concreto, agregados, asfalto, roofing y logística.
 
 ---
 
-## 🚀 Instalación
+## 🚀 Inicialización
+
+Este proyecto usa **[pnpm](https://pnpm.io)** como gestor de paquetes.
+
+### Requisitos previos
+
+| Herramienta | Versión mínima | Comprobación |
+|---|---|---|
+| Node.js | 18 o superior | `node --version` |
+| pnpm | 9 o superior | `pnpm --version` |
+
+Si no tienes pnpm, instálalo con Corepack (viene incluido con Node.js ≥ 16.10):
 
 ```bash
-git clone https://github.com/tama8947/knowing-amrize-game.git
-cd knowing-amrize-game
-npm install
-npm run dev
+corepack enable pnpm
+# o bien, de forma global:
+npm install -g pnpm
 ```
 
-Abre <http://localhost:5173>.
+### Pasos
 
-**Requisito:** Node.js 18 o superior.
+```bash
+# 1. Clonar el repositorio
+git clone https://github.com/tama8947/knowing-amrize-game.git
+
+# 2. Entrar en la carpeta
+cd knowing-amrize-game
+
+# 3. Instalar las dependencias
+pnpm install
+
+# 4. Arrancar el servidor de desarrollo
+pnpm dev
+```
+
+Abre <http://localhost:5173> en el navegador. 🎉
+
+> **Nota:** el repositorio incluye `pnpm-lock.yaml`, así que las versiones de
+> las dependencias quedan fijadas y el `install` es reproducible.
 
 ### Otros comandos
 
 | Comando | Qué hace |
 |---|---|
-| `npm run dev` | Servidor de desarrollo con HMR |
-| `npm run build` | Build de producción → `dist/` |
-| `npm run preview` | Previsualiza el build |
-| `npm run test:e2e` | 33 pruebas end-to-end (Playwright) |
-| `npm run screenshots` | Regenera las capturas de `docs/` |
+| `pnpm dev` | Servidor de desarrollo con HMR |
+| `pnpm build` | Build de producción → `dist/` |
+| `pnpm preview` | Previsualiza el build |
+| `pnpm test:e2e` | 33 pruebas end-to-end (Playwright + Chromium) |
+| `pnpm screenshots` | Regenera las capturas de `docs/` |
+| `pnpm data:map` | Regenera la geometría del mapa |
+| `pnpm data:plants` | Regenera el catálogo de plantas |
+
+### ¿Primera vez con las pruebas?
+
+Las pruebas end-to-end necesitan el navegador de Chromium, que se descarga la
+primera vez (~120 MB):
+
+```bash
+pnpm exec playwright install chromium
+pnpm test:e2e
+```
+
+### Problemas frecuentes
+
+<details>
+<summary><b>«Cannot find module 'three'» o errores de resolución</b></summary>
+
+Las dependencias no están instaladas o el `node_modules` está incompleto:
+
+```bash
+pnpm install
+```
+</details>
+
+<details>
+<summary><b>«ERR_PNPM_IGNORED_BUILDS»</b></summary>
+
+pnpm 10+ bloquea los scripts de instalación por seguridad. Este proyecto lo
+autoriza explícitamente en `pnpm-workspace.yaml`:
+
+```yaml
+allowBuilds:
+  esbuild: true
+```
+
+Si sigue apareciendo, ejecuta `pnpm rebuild esbuild`.
+</details>
+
+<details>
+<summary><b>El puerto 5173 está ocupado</b></summary>
+
+```bash
+pnpm dev --port 3000
+```
+</details>
+
+<details>
+<summary><b>La página va lenta o se traba</b></summary>
+
+En equipos modestos o móviles se activa automáticamente el modo ligero (sin
+sombras, pixel ratio 1). Para forzarlo: `pnpm dev -- --host` y abre la URL con
+`?lowfx=1`.
+</details>
 
 ---
 
@@ -127,8 +208,15 @@ Dos scripts regeneran los datos desde sus fuentes originales, de forma
 reproducible:
 
 ```bash
-node tools/build-map-data.mjs    # Natural Earth 10m admin-1 → geometría del mapa
-node tools/build-plants.mjs      # ubicaciones de amrize.com → catálogo de plantas
+pnpm data:map      # Natural Earth 10m admin-1 → geometría del mapa
+pnpm data:plants   # ubicaciones de amrize.com → catálogo de plantas
+```
+
+O directamente:
+
+```bash
+node tools/build-map-data.mjs
+node tools/build-plants.mjs
 ```
 
 La geometría usa Douglas–Peucker para simplificar y la **proyección Albers

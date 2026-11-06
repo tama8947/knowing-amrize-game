@@ -1,0 +1,9 @@
+# Configuración de pnpm (https://pnpm.io/settings)
+#
+# pnpm 10+ bloquea los scripts de instalación de las dependencias por defecto
+# para evitar ejecución de código arbitrario. `allowBuilds` los autoriza
+# explícitamente, uno a uno.
+#
+# esbuild lo necesita para compilar su binario nativo (usado por Vite).
+allowBuilds:
+  esbuild: true
