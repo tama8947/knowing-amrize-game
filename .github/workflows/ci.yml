@@ -24,9 +24,8 @@ jobs:
         uses: actions/checkout@v4
 
       - name: 📦 Instalar pnpm
+        # Sin «version»: pnpm lee la versión de «packageManager» en package.json
         uses: pnpm/action-setup@v4
-        with:
-          version: 11
 
       - name: 🟢 Instalar Node.js
         uses: actions/setup-node@v4
